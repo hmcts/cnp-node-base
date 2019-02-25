@@ -12,59 +12,20 @@ trigger:
 pr:
   - master
 
-variables:
-  azureContainerRegistry: hmcts.azurecr.io
-  azureSubscriptionEndpoint: azurerm-nonprod
-  vmImage: "Ubuntu-16.04"
+strategy:
+  matrix:
+    alpine-node-8:
+      imageDockerfilePath: 8/alpine/Dockerfile
+      imageName: hmcts/base/node/alpine-lts-8
+    alpine-node-10:
+      imageDockerfilePath: 10/alpine/Dockerfile
+      imageName: hmcts/base/node/alpine-lts-10
+    stretch-slim-node-8:
+      imageDockerfilePath: 8/stretch-slim/Dockerfile
+      imageName: hmcts/base/node/stretch-slim-lts-8
+    stretch-slim-node-10:
+      imageDockerfilePath: 10/stretch-slim/Dockerfile
+      imageName: hmcts/base/node/stretch-slim-lts-10
 
 jobs:
-  - job: Build
-    strategy:
-      matrix:
-        alpine-node-8:
-          imageDockerfilePath: 8/alpine/Dockerfile
-          imageName: hmcts/base/node/alpine-lts-8
-        alpine-node-10:
-          imageDockerfilePath: 10/alpine/Dockerfile
-          imageName: hmcts/base/node/alpine-lts-10
-        stretch-slim-node-8:
-          imageDockerfilePath: 8/stretch-slim/Dockerfile
-          imageName: hmcts/base/node/stretch-slim-lts-8
-        stretch-slim-node-10:
-          imageDockerfilePath: 10/stretch-slim/Dockerfile
-          imageName: hmcts/base/node/stretch-slim-lts-10
-    pool:
-      vmImage: $(vmImage)
-    steps:
-      - template: steps/build.yml
-        parameters:
-          imageDockerfilePath: $(imageDockerfilePath)
-          imageName: $(imageName)
-          azureContainerRegistry: $(azureContainerRegistry)
-          azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-
-  - job: Release
-    strategy:
-      matrix:
-        alpine-node-8:
-          imageDockerfilePath: 8/alpine/Dockerfile
-          imageName: hmcts/base/node/alpine-lts-8
-        alpine-node-10:
-          imageDockerfilePath: 10/alpine/Dockerfile
-          imageName: hmcts/base/node/alpine-lts-10
-        stretch-slim-node-8:
-          imageDockerfilePath: 8/stretch-slim/Dockerfile
-          imageName: hmcts/base/node/stretch-slim-lts-8
-        stretch-slim-node-10:
-          imageDockerfilePath: 10/stretch-slim/Dockerfile
-          imageName: hmcts/base/node/stretch-slim-lts-10
-    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master')) # Master branch only
-    dependsOn: Build
-    pool:
-      vmImage: $(vmImage)
-    steps:
-      - template: steps/release.yml
-        parameters:
-          imageName: $(imageName)
-          azureContainerRegistry: $(azureContainerRegistry)
-          azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+  - template: templates/jobs.yml

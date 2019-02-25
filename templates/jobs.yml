@@ -1,0 +1,28 @@
+parameters:
+  azureContainerRegistry: hmcts.azurecr.io
+  azureSubscriptionEndpoint: azurerm-nonprod
+  vmImage: Ubuntu-16.04
+
+jobs:
+  - job: Build
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    steps:
+      - template: steps/build.yml
+        parameters:
+          imageDockerfilePath: $(imageDockerfilePath)
+          imageName: $(imageName)
+          azureContainerRegistry: ${{ parameters.azureContainerRegistry }}
+          azureSubscriptionEndpoint: ${{ parameters.azureSubscriptionEndpoint }}
+
+  - job: Release
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master')) # Master branch only
+    dependsOn: Build
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    steps:
+      - template: steps/release.yml
+        parameters:
+          imageName: $(imageName)
+          azureContainerRegistry: ${{ parameters.azureContainerRegistry }}
+          azureSubscriptionEndpoint: ${{ parameters.azureSubscriptionEndpoint }}
