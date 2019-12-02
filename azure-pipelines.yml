@@ -52,6 +52,7 @@ jobs:
         parameters:
           imageDockerfilePath: $(imageDockerfilePath)
           imageName: $(imageName)
+          tag: $(tag)
           azureContainerRegistry: $(azureContainerRegistry)
           azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
 
@@ -84,5 +85,6 @@ jobs:
       - template: steps/release.yml
         parameters:
           imageName: $(imageName)
+          tag: $(tag)
           azureContainerRegistry: $(azureContainerRegistry)
           azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
