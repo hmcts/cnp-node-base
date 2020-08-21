@@ -29,12 +29,12 @@ jobs:
           imageDockerfilePath: 12/buster-slim/Dockerfile
           imageName: base/node
           tag: 12-buster-slim
-        alpine-node-12:
-          imageDockerfilePath: 12/alpine/Dockerfile
+        alpine-node-14:
+          imageDockerfilePath: 14/alpine/Dockerfile
           imageName: base/node
           tag: 12-alpine
-        buster-slim-node-12:
-          imageDockerfilePath: 12/buster-slim/Dockerfile
+        buster-slim-node-14:
+          imageDockerfilePath: 14/buster-slim/Dockerfile
           imageName: base/node
           tag: 12-buster-slim
     pool:
