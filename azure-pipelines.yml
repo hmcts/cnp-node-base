@@ -32,11 +32,11 @@ jobs:
         alpine-node-14:
           imageDockerfilePath: 14/alpine/Dockerfile
           imageName: base/node
-          tag: 12-alpine
+          tag: 14-alpine
         buster-slim-node-14:
           imageDockerfilePath: 14/buster-slim/Dockerfile
           imageName: base/node
-          tag: 12-buster-slim
+          tag: 14-buster-slim
     pool:
       vmImage: $(vmImage)
     steps:
