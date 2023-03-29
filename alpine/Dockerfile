@@ -6,7 +6,9 @@ ENV APP_USER=hmcts \
 
 WORKDIR ${WORKDIR}
 
-RUN apk update && apk --no-cache add shadow=4.13-r0 \
+# Always install the latest package versions for this
+# hadolint ignore=DL3018
+RUN apk update && apk --no-cache add shadow \
   && userdel node \
   && apk del shadow \
   && addgroup -g 1000 -S $APP_USER \
