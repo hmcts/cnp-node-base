@@ -1,4 +1,4 @@
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18
 FROM hmctspublic.azurecr.io/imported/library/node:$NODE_VERSION-alpine
 
 ENV APP_USER=hmcts \
@@ -6,7 +6,9 @@ ENV APP_USER=hmcts \
 
 WORKDIR ${WORKDIR}
 
-RUN apk --no-cache add shadow=4.8.1-r1 \
+# Always install the latest package versions for this
+# hadolint ignore=DL3018
+RUN apk update && apk --no-cache add shadow \
   && userdel node \
   && apk del shadow \
   && addgroup -g 1000 -S $APP_USER \
