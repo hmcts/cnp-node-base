@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Hadolint Dockerfile
         # TODO https://github.com/hadolint/hadolint-action/pull/45
-        uses: mblottiere/hadolint-action@390bcfc1bcbdbe0eab20a313ad47a2d297a69441
+        uses: mblottiere/hadolint-action@3cfc69d4b25bafd525584886f73b385ee4f3ce28
         with:
           dockerfile: ./${{ matrix.type }}/Dockerfile
       - name: Setup Docker Buildx
