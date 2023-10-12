@@ -18,7 +18,7 @@ We recommend that you use the alpine image as it is smaller and most of the time
 | Tag                                                 | OS             | NodeJS version |
 | ----------------------------------------------------| -------------- | -------------- |
 | `hmctspublic.azurecr.io/base/node:20-alpine`        | Alpine         | LTS 20         |
-| `hmctspublic.azurecr.io/base/node:20-buster-slim`   | Debian buster  | LTS 20         |
+| `hmctspublic.azurecr.io/base/node:20-bookworm-slim` | Debian bookworm| LTS 20         |
 
 ## Background
 
@@ -99,7 +99,7 @@ Apk/apt packages installation requires the `root` user so you may switch tempora
 
 ```Dockerfile
 ### build image (Debian) ###
-FROM hmctspublic.azurecr.io/base/node:20-buster-slim as base
+FROM hmctspublic.azurecr.io/base/node:20-bookworm-slim as base
 
 USER root
 RUN apt-get update && apt-get install ...
