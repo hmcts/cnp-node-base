@@ -2,9 +2,7 @@ ARG NODE_VERSION=20
 FROM hmctspublic.azurecr.io/imported/library/node:$NODE_VERSION-alpine
 
 ENV APP_USER=hmcts \
-  WORKDIR=/opt/app \
-  YARN_ENABLE_GLOBAL_CACHE=true \
-  YARN_GLOBAL_FOLDER=/opt/.yarn
+  WORKDIR=/opt/app
 
 WORKDIR ${WORKDIR}
 
