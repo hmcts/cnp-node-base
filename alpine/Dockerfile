@@ -6,6 +6,8 @@ ENV APP_USER=hmcts \
   YARN_ENABLE_GLOBAL_CACHE=true \
   YARN_GLOBAL_FOLDER=/opt/.yarn
 
+RUN mkdir /opt/.yarn
+
 WORKDIR ${WORKDIR}
 
 # Always install the latest package versions for this
