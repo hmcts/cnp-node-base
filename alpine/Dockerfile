@@ -15,7 +15,8 @@ RUN apk update && apk --no-cache add shadow \
   && adduser -u 1000 -S $APP_USER -G $APP_USER \
   && mkdir /opt/app \
   && chown -R $APP_USER:$APP_USER /opt/app \
-  && chown -R $APP_USER:$APP_USER /opt/.yarn
+  && chown -R $APP_USER:$APP_USER /opt/.yarn \ 
+  && yarn set version 3.0.0
 
 USER hmcts
 CMD ["yarn", "start"]
