@@ -2,7 +2,9 @@ ARG NODE_VERSION=20
 FROM hmctspublic.azurecr.io/imported/library/node:$NODE_VERSION-bookworm-slim
 
 ENV APP_USER=hmcts \
-    WORKDIR=/opt/app
+    WORKDIR=/opt/app \
+    YARN_GLOBAL_FOLDER=/opt/app/.yarn \
+    YARN_ENABLE_GLOBAL_CACHE=true
 
 WORKDIR ${WORKDIR}
 
