@@ -2,7 +2,9 @@ ARG NODE_VERSION=20
 FROM hmctspublic.azurecr.io/imported/library/node:$NODE_VERSION-alpine
 
 ENV APP_USER=hmcts \
-  WORKDIR=/opt/.yarn
+  WORKDIR=/opt/app \
+  YARN_GLOBAL_FOLDER=/opt/app/.yarn \
+  YARN_ENABLE_GLOBAL_CACHE=true
 
 WORKDIR ${WORKDIR}
 
@@ -13,10 +15,7 @@ RUN apk update && apk --no-cache add shadow \
   && apk del shadow \
   && addgroup -g 1000 -S $APP_USER \
   && adduser -u 1000 -S $APP_USER -G $APP_USER \
-  && mkdir /opt/app \
   && chown -R $APP_USER:$APP_USER /opt/app \
-  && chown -R $APP_USER:$APP_USER /opt/.yarn \ 
-  && yarn set version 3.0.0
 
 USER hmcts
 CMD ["yarn", "start"]
