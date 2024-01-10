@@ -46,7 +46,7 @@ testWorkdir() {
     local defaultWorkdir
     local workDir
 
-    defaultWorkdir="/opt/.yarn"
+    defaultWorkdir="/opt/app"
     workDir=$(echo `docker run --rm ${tag}:${version} pwd` | removeTrailingspaces)
 
     if [[ "$workDir" != "$defaultWorkdir" ]]; then
