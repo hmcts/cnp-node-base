@@ -42,12 +42,13 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      # HMCTS prod
+      ###################################################
+      # HMCTSPROD ACR
+      ###################################################
       - name: 'ACR Login - ${{ env.NEW_AZURE_CONTAINER_REGISTRY_URL }}'
         run: |
           az acr login --name hmctsprod
 
-      # HMCTSPROD ACR
       - name: 'Build and push prod image - ${{ env.NEW_AZURE_CONTAINER_REGISTRY_URL }} - Node ${{ matrix.node }} ${{ matrix.type }}'
         if: github.ref == 'refs/heads/master'
         uses: docker/build-push-action@v6
@@ -59,7 +60,9 @@ jobs:
           build-args: |
             NODE_VERSION=${{ matrix.node }}
 
-      # HMCTSPUBLIC ACR
+      ###################################################
+      # HMCTSPUBLIC ACR - Push
+      ###################################################
       - name: 'Build and Push prod image - ${{ env.AZURE_CONTAINER_REGISTRY_URL }} - Node ${{ matrix.node }} ${{ matrix.type }}'
         if: github.ref == 'refs/heads/master'
         uses: docker/login-action@v3
