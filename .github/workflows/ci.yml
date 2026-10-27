@@ -102,7 +102,7 @@ jobs:
       ###################################################
       # HMCTSSBOX ACR
       ###################################################
-      - name: "ACR Login - HMCTSSBOX"
+      - name: "ACR Login - ${{ env.SBOX_AZURE_CONTAINER_REGISTRY_URL }}"
         run: |
           az acr login --name hmctssbox
 
