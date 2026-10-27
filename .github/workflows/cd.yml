@@ -20,6 +20,7 @@ jobs:
     env:
       AZURE_CONTAINER_REGISTRY_URL: hmctspublic.azurecr.io
       NEW_AZURE_CONTAINER_REGISTRY_URL: hmctsprod.azurecr.io
+      SBOX_AZURE_CONTAINER_REGISTRY_URL: hmctssbox.azurecr.io
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -79,5 +80,23 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ env.AZURE_CONTAINER_REGISTRY_URL }}/base/node:${{ matrix.node }}-${{ matrix.type }}
+          build-args: |
+            NODE_VERSION=${{ matrix.node }}
+
+      ###################################################
+      # HMCTSSBOX ACR
+      ###################################################
+      - name: "ACR Login - ${{ env.SBOX_AZURE_CONTAINER_REGISTRY_URL }}"
+        run: |
+          az acr login --name hmctssbox
+
+      - name: "Build and Push prod image - ${{ env.SBOX_AZURE_CONTAINER_REGISTRY_URL }} - Node ${{ matrix.node }} ${{ matrix.type }}"
+        if: github.ref == 'refs/heads/master'
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ matrix.type }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ env.SBOX_AZURE_CONTAINER_REGISTRY_URL }}/base/node:${{ matrix.node }}-${{ matrix.type }}
           build-args: |
             NODE_VERSION=${{ matrix.node }}
